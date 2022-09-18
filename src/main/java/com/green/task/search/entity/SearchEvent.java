@@ -1,5 +1,6 @@
 package com.green.task.search.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "search_event")
 @Getter
+@EqualsAndHashCode(of = "id")
 public class SearchEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
