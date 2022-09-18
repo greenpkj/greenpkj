@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@AutoConfigureRestDocs(uriHost = "http://localhost:8080")
+@AutoConfigureRestDocs(uriHost = "localhost")
 public class BlogSearchControllerTest {
 
     @Autowired

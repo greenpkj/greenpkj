@@ -29,7 +29,7 @@
 
 
 #### API docs
-[ Api 문서 ](./apidoc.html)
+[ Api 문서 ](https://htmlpreview.github.io/?https://github.com/greenpkj/greenpkj/blob/master/apidocs.html)
 
 ## 2. package 구조
 
