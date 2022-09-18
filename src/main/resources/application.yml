@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: green-pkj-app
+  redis:
+    host: localhost
+    port: 6379
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    generate-ddl: true
+  h2:
+    console:
+      enabled: true
+      path: /h2
+      settings:
+        web-allow-others: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+
+blog-api:
+  kakao:
+    host: https://dapi.kakao.com
+    apikey: ENC(FyiG3lo9UBe4KMkGjMFb+zX/IrMaWkqgVeFXYmmwtVavCdmKMs4vmenVqbYqbSEb)
+  naver:
+    host: https://openapi.naver.com
+    client-id: ENC(Ij6GLxRsIw1rroKtthC0RqQ/ocWOSDVkNpUZsNvznFM=)
+    client-secret: ENC(PQe9QlG4CnVICuIK1hbrnfwaJj7sXQVU)

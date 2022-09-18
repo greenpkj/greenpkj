@@ -1,0 +1,14 @@
+@startuml
+
+actor client
+participant apiServer
+database H2
+database redis
+
+client -> apiServer: 인기 검색어 요청 - /v1/search/rank 호출
+
+apiServer -> redis : 임기검색어 조회 요청
+redis -> redis : ZRANGEBYSCORE score 의 범위를 주고 검색
+redis -> apiServer : 임기검색어 return
+apiServer -> client : return
+@enduml

@@ -1,0 +1,99 @@
+= Green PKJ Docs
+:snippets: build/generated-snippets
+endif::[]
+= {docname} API Document
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+== 공통 에러 Common Error
+
+[cols="h,m,s,e"]
+|===
+|errReason |errCode |errMsg | description
+
+| reason for error
+| APP_0003
+| METHOD_NOT_SUPPORT
+| 허용하지 않은 http method를 쓸 경우
+
+| reason for error
+| APP_0004
+| NO_HANDLER_FOUND
+| 맵핑되는 엔드포인트가 없을 경우
+
+|===
+
+== 블로그 검색 API
+== Request
+=== Curl-Reqeust
+include::{snippets}/blog_search/curl-request.adoc[]
+=== Http-Reqeust
+include::{snippets}/blog_search/http-request.adoc[]
+=== Request-Parameters
+include::{snippets}/blog_search/request-parameters.adoc[]
+
+== Response
+=== Http-Response
+include::{snippets}/blog_search/http-response.adoc[]
+=== Response-Body
+include::{snippets}/blog_search/response-body.adoc[]
+=== Response-Fields
+include::{snippets}/blog_search/response-fields.adoc[]
+
+== Fail Response
+
+[cols="h,m,s,e"]
+|===
+|errReason |errCode |errMsg | description
+
+| reason for error
+| APP_0005
+| CHECK_QUERY_STRING
+| page가 0일 경우, size가 50을 초과할경우, queryString중 query가 빠질 경우
+
+| reason for error
+| APP_0006
+| CHECK_QUERY_SORT_OPTION
+| sort Option이 accuracy 또는 recency가 아닌 경우
+
+|===
+
+
+
+== 인기 검색어 목록 API V1
+== Request
+=== Curl-Reqeust
+include::{snippets}/searchKeyword_v1/curl-request.adoc[]
+=== Http-Reqeust
+include::{snippets}/searchKeyword_v1/http-request.adoc[]
+
+== Response
+=== Http-Response
+include::{snippets}/searchKeyword_v1/http-response.adoc[]
+=== Response-Body
+include::{snippets}/searchKeyword_v1/response-body.adoc[]
+=== Response-Fields
+include::{snippets}/searchKeyword_v1/response-fields.adoc[]
+
+
+== 인기 검색어 목록 API V2
+== Request
+=== Curl-Reqeust
+include::{snippets}/searchKeyword_v2/curl-request.adoc[]
+=== Http-Reqeust
+include::{snippets}/searchKeyword_v2/http-request.adoc[]
+
+== Response
+=== Http-Response
+include::{snippets}/searchKeyword_v2/http-response.adoc[]
+=== Response-Body
+include::{snippets}/searchKeyword_v2/response-body.adoc[]
+=== Response-Fields
+include::{snippets}/searchKeyword_v2/response-fields.adoc[]
+
+
+

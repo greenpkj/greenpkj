@@ -1,0 +1,42 @@
+@startuml
+
+actor client
+participant apiServer
+participant kakaoApi
+participant naverApi
+queue BlogSearchEventListener
+database H2
+database redis
+
+client -> apiServer: 검색 요청
+
+apiServer -> apiServer : 요청 파라미터 validation
+
+apiServer -> kakaoApi : 카카오 블로그 검색 요청
+
+alt successful case
+
+    kakaoApi -> apiServer: 결과 return
+
+else kakak api 통신 실패시
+
+    apiServer -> naverApi: 네이버 블로그 검색 요청
+
+
+alt 카카오 api정상 return
+    kakaoApi -> apiServer: 결과 return
+
+else 카카오 api 비정상
+    apiServer -> naverApi: 블로그 검색 요청
+    naverApi -> apiServer: 결과 리턴
+end
+
+apiServer -> BlogSearchEventListener: 검색 키워드 이벤트 발행
+
+... event listen ...
+BlogSearchEventListener <-> H2 : 키워드 저장 - search_event테이블
+BlogSearchEventListener <-> redis : 키워드 저장 redis ZADD
+... event finish ...
+
+apiServer -> client : client 검색결과, page정보 return
+@enduml

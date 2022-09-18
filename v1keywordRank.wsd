@@ -1,0 +1,13 @@
+@startuml
+
+actor client
+participant apiServer
+database H2
+database redis
+
+client -> apiServer: 인기 검색어 요청 - /v1/search/rank 호출
+
+apiServer -> H2 : 임기검색어 조회 요청
+H2 -> apiServer : 임기검색어 return
+apiServer -> client : return
+@enduml

@@ -1,0 +1,131 @@
+buildscript {
+    ext {
+        queryDslVesion = "5.0.0"
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.7.3'
+    id 'io.spring.dependency-management' version '1.0.13.RELEASE'
+    id 'java'
+    id 'com.ewerk.gradle.plugins.querydsl' version "1.0.10"
+    id 'com.epages.restdocs-api-spec' version "0.15.3"
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
+
+}
+
+
+group = 'com.green'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    maven { url 'https://repo.spring.io/release' }
+    mavenCentral()
+    jcenter()
+}
+
+ext {
+    set('springCloudVersion', "2021.0.4")
+    snippetsDir = file('build/generated-snippets')
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    implementation "com.querydsl:querydsl-jpa:${queryDslVesion}"
+    implementation "com.querydsl:querydsl-apt:${queryDslVesion}"
+
+    implementation ('it.ozimov:embedded-redis:0.7.3') { exclude group: "org.slf4j", module: "slf4j-simple" }
+    implementation 'org.redisson:redisson-spring-boot-starter:3.17.6'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation('com.epages:restdocs-api-spec-mockmvc:0.16.2')
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+tasks.named('test') {
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+}
+
+//tasks.named('bootBuildImage') {
+//    builder = 'paketobuildpacks/builder:tiny'
+//    environment = ['BP_NATIVE_IMAGE': 'true']
+//}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+openapi3 {
+    server = "http://localhost:8080"
+    title = "green app api"
+    description = "green app api"
+    version = '0.1.0'
+    format = "yaml"
+}
+
+task createOpenApi {
+    dependsOn 'openapi3'
+    doLast {
+        copy {
+            from "build/api-spec"
+            include "*.yaml"
+            into "build/resources/main/static/docs"
+        }
+    }
+}
+
+bootRun {
+    dependsOn 'createOpenApi'
+}
+
+
+// 쿼리 dsl 설정
+def querydslDir = 'src/main/generated'
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+    main.java.srcDir querydslDir
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    querydsl.extendsFrom compileClasspath
+}
+
+// querydsl 컴파일시 사용할 옵션 설정
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
