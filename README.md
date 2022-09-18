@@ -2,6 +2,9 @@
     - local server: 8080 port 확인
     - redis local server: 3306 port 확인
 
+## 어플리케이션 다운로드
+- [다운로드 링크](https://drive.google.com/file/d/1dj5QmiGKzKfrtQDlmBx1Kna3byYMoYP8/view?usp=sharing)
+
 ## 1. API description
 
 ### api 블로그 검색 조회
