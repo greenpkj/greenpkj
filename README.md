@@ -7,7 +7,8 @@
 ### api 블로그 검색 조회
 - 검색 후 dto return 전에 데이터 저장 분리 - EventListener, ApplicationEventPublisher 활용
 - 외부 api 호출 실패시 resilience4j 도입 - fallback 수행
-- 
+
+
 #### 시퀀스 다이어그램
 ![image info](./blogSearch.png)
 
@@ -17,18 +18,24 @@
 - v2 : redis를 통해 데이터 핸들
 
 #### 시퀀스 다이어그램
+
 - /v1/search/rank
+
 ![image info](./v1keywordRank.png)
 
 - /v2/search/rank
+
 ![image info](./v2keywordRank.png)
 
+
+#### API docs
+[ Api 문서 ](./apidoc.html)
 
 ## 2. package 구조
 
 blog
 - client : 외부 api client
-- dto : blog검색 도메인 dto
+- dto : blog 검색 도메인 dto
 - service : 비지니스 로직 수행
 
 config
@@ -68,10 +75,38 @@ org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j
 
 ```
 
-## 4. TODO
+## 4. Test case
+
+- BlogSearchClientTest
+  - 카카오, 네이버 조회 정상 확인
+- BlogSearchFallBackServiceTest
+  - 카카오 조회 실패시 fallback수행(네이버 조회)
+- BlogSearchControllerTest
+  - 블로그검색 통합테스트
+- AppExceptionHandlerTest
+  - RestAdviceController 테스트
+- ApplicationEventPublisherMockTest
+  - eventPublish 정상 테스트
+- BlogSearchEventListenerMockTest
+  - mock test
+- SearchEventRepositoryTest
+  - dataJpaTest
+- SearchEventRedisServiceAtomicTest
+  - redis 검색 hit 동시성 테스트
+- SearchEventServiceMockTest
+  - mock test
+- SearchRankServiceMockTest
+  - mock test
+- SearchEventControllerTest
+  - 인기검색어 통합테스트
+
+## 5. TODO
 1. TestContainers 도입
 - 현재는 H2 DB와 embedded-redis를 쓰고 있지만 실제 개발환경에서는 쓰이지 않음
 - 위를 도입을 통해 여러 디펜던시가 걸려있는 DB, Redis, Kafka 등등 테스트코드를 더 안전하게 짤수 있다.
 
 2. KsqlDb 또는 카프카 스트림 활용
 - 인기검색어 목록을 카프카 스트림 또는 KsqlDb를 활용하여 대체
+
+3. 인기검색 개선
+- 실제 인기검색 api를 user들에게 제공하게 될 경우 특정 기간(ex: 1분) 캐싱해서 처리진행
