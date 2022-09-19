@@ -24,7 +24,7 @@ import java.util.List;
 public class BlogSearchController {
 
     private static final String QUERY_VALID_MESSAGE = "query field must has a keyword for search";
-    private static final String PAGE_MIN_VALID_MESSAGE = "size should be under 50";
+    private static final String PAGE_MIN_VALID_MESSAGE = "page should be over 0";
     private static final String SIZE_MAX_VALID_MESSAGE = "size should be under 50";
 
     private static final List<String> SORT_OPTIONS = List.of("accuracy", "recency");
