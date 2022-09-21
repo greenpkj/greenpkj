@@ -14,19 +14,11 @@ apiServer -> apiServer : 요청 파라미터 validation
 
 apiServer -> kakaoApi : 카카오 블로그 검색 요청
 
-alt successful case
-
-    kakaoApi -> apiServer: 결과 return
-
-else kakak api 통신 실패시
-
-    apiServer -> naverApi: 네이버 블로그 검색 요청
-
-
 alt 카카오 api정상 return
     kakaoApi -> apiServer: 결과 return
 
 else 카카오 api 비정상
+    kakaoApi -> apiServer : 카카오 error return
     apiServer -> naverApi: 블로그 검색 요청
     naverApi -> apiServer: 결과 리턴
 end
