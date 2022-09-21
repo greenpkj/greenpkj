@@ -1,6 +1,6 @@
 - local 환경 실패시
     - local server: 8080 port 확인
-    - redis local server: 3306 port 확인
+    - redis local server: 6379 port 확인
 
 ### 어플리케이션 다운로드
 
