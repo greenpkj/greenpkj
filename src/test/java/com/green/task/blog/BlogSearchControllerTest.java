@@ -58,20 +58,20 @@ public class BlogSearchControllerTest {
                 .andExpect(jsonPath("list[0].time").isString())
                 .andExpect(jsonPath("list[0].title").isString())
                 .andExpect(jsonPath("list[0].url").isString())
-                .andExpect(jsonPath("totalPages").exists())
-                .andExpect(jsonPath("totalPages").isNumber())
-                .andExpect(jsonPath("totalElements").exists())
-                .andExpect(jsonPath("totalElements").isNumber())
                 .andExpect(jsonPath("page").exists())
-                .andExpect(jsonPath("page").isNumber())
-                .andExpect(jsonPath("size").exists())
-                .andExpect(jsonPath("size").isNumber())
-                .andExpect(jsonPath("last").exists())
-                .andExpect(jsonPath("last").isBoolean())
-                .andExpect(jsonPath("next").exists())
-                .andExpect(jsonPath("next").isBoolean())
-                .andExpect(jsonPath("sort").exists())
-                .andExpect(jsonPath("sort").isString())
+                .andExpect(jsonPath("page.totalPages").exists())
+                .andExpect(jsonPath("page.totalPages").isNumber())
+                .andExpect(jsonPath("page.totalElements").exists())
+                .andExpect(jsonPath("page.totalElements").isNumber())
+                .andExpect(jsonPath("page.page").isNumber())
+                .andExpect(jsonPath("page.size").exists())
+                .andExpect(jsonPath("page.size").isNumber())
+                .andExpect(jsonPath("page.last").exists())
+                .andExpect(jsonPath("page.last").isBoolean())
+                .andExpect(jsonPath("page.next").exists())
+                .andExpect(jsonPath("page.next").isBoolean())
+                .andExpect(jsonPath("page.sort").exists())
+                .andExpect(jsonPath("page.sort").isString())
 
                 .andDo(document("blog_search",
                         requestParameters(
@@ -88,13 +88,14 @@ public class BlogSearchControllerTest {
                                 fieldWithPath("list[].title").type(JsonFieldType.STRING).description("블로그 제목"),
                                 fieldWithPath("list[].url").type(JsonFieldType.STRING).description("블로그 link url"),
                                 fieldWithPath("list[].thumbnail").type(JsonFieldType.STRING).description("블로그 썸네일이미지, 네이버 검색일 경우 데이터 없음").optional(),
-                                fieldWithPath("totalPages").type(JsonFieldType.NUMBER).description("total page"),
-                                fieldWithPath("totalElements").type(JsonFieldType.NUMBER).description("total Elements"),
-                                fieldWithPath("page").type(JsonFieldType.NUMBER).description("page, should be over 0"),
-                                fieldWithPath("size").type(JsonFieldType.NUMBER).description("size, should be under 50"),
-                                fieldWithPath("last").type(JsonFieldType.BOOLEAN).description("페이지 마지막 유무"),
-                                fieldWithPath("next").type(JsonFieldType.BOOLEAN).description("다음 페이지 유무"),
-                                fieldWithPath("sort").type(JsonFieldType.STRING).description("sort : accuracy(정확도순) 또는 recency(최신순), 기본 값 accuracy")
+                                fieldWithPath("page").type(JsonFieldType.OBJECT).description("page 정보"),
+                                fieldWithPath("page.totalPages").type(JsonFieldType.NUMBER).description("total page"),
+                                fieldWithPath("page.totalElements").type(JsonFieldType.NUMBER).description("total Elements"),
+                                fieldWithPath("page.page").type(JsonFieldType.NUMBER).description("page, should be over 0"),
+                                fieldWithPath("page.size").type(JsonFieldType.NUMBER).description("size, should be under 50"),
+                                fieldWithPath("page.last").type(JsonFieldType.BOOLEAN).description("페이지 마지막 유무"),
+                                fieldWithPath("page.next").type(JsonFieldType.BOOLEAN).description("다음 페이지 유무"),
+                                fieldWithPath("page.sort").type(JsonFieldType.STRING).description("sort : accuracy(정확도순) 또는 recency(최신순), 기본 값 accuracy")
                         )
                 ));
     }

@@ -5,7 +5,7 @@
 ### 어플리케이션 다운로드
 
 - 깃헙 [다운로드 링크](https://github.com/greenpkj/greenpkj/blob/master/task-0.0.1-SNAPSHOT.jar)
-- 구글 [다운로드 링크](https://drive.google.com/file/d/1KCzlRPttPbR03c728fvbaf6FUe0kVsSX/view?usp=sharing)
+- 구글 [다운로드 링크](https://drive.google.com/file/d/1kXnwN9tRnz0HV-x9zESnP21uELLgGivE/view?usp=sharing)
 
 ### api 명세서
 - [ Api 문서 ](https://htmlpreview.github.io/?https://github.com/greenpkj/greenpkj/blob/master/apidocs.html)

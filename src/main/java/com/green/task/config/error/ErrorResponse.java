@@ -10,6 +10,7 @@ public class ErrorResponse {
         this.errCode = errCode;
         this.errMsg = errMsg;
     }
+
     private String errReason;
     private String errCode;
     private String errMsg;

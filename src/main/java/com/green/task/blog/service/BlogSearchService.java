@@ -32,23 +32,23 @@ public class BlogSearchService implements ApplicationEventPublisherAware {
     }
 
     @CircuitBreaker(name = "search", fallbackMethod = "fallback")
-    public PageResponse search(BlogSearchDto.KakaoDto dto) {
+    public BlogSearchPageResponse search(BlogSearchDto.KakaoDto dto) {
         log.info("start to search : {} ", dto);
         final KakaoSearchResponse searchRes = kakaoClient.search(dto);
         return convertResponse(searchRes, dto);
     }
 
-    private PageResponse convertResponse(KakaoSearchResponse saerchResponse, BlogSearchDto.KakaoDto dto) {
-        List<BlogSearchResponse> list = saerchResponse.getDocuments().stream().map(BlogSearchResponse::toResponse).collect(Collectors.toList());
+    private BlogSearchPageResponse convertResponse(KakaoSearchResponse saerchResponse, BlogSearchDto.KakaoDto dto) {
+        List<BlogSearchPageResponse.BlogSearchResponse> list = saerchResponse.getDocuments().stream().map(BlogSearchPageResponse.BlogSearchResponse::toResponse).collect(Collectors.toList());
         eventPublisher.publishEvent(new SearchEventMessage(dto.getQuery(), LocalDateTime.now()));
-        PageImpl<BlogSearchResponse> page = new PageImpl<>(list, PageRequest.of(dto.getPage(), dto.getSize(), Sort.by(dto.getSort()).descending()), saerchResponse.getMeta().getTotalCount());
+        PageImpl<BlogSearchPageResponse.BlogSearchResponse> page = new PageImpl<>(list, PageRequest.of(dto.getPage(), dto.getSize(), Sort.by(dto.getSort()).descending()), saerchResponse.getMeta().getTotalCount());
 
-        return PageResponse.of(page, dto.getSort());
+        return BlogSearchPageResponse.of(list, PageResponse.of(page, dto.getSort()));
     }
 
-    private PageResponse fallback(BlogSearchDto.KakaoDto dto, Exception e) {
+    private BlogSearchPageResponse fallback(BlogSearchDto.KakaoDto dto, Exception e) {
 
-        log.error("error occurred : {}", e);
+        log.error("error occurred : ", e);
         NaverSearchResponse naverResponse = naverClient.search(BlogSearchDto.NaverDto.toNaverDto(dto));
         KakaoSearchResponse kakaoResponse = naverResponse.toKakaoResponse();
         return convertResponse(kakaoResponse, dto);

@@ -3,6 +3,7 @@ package com.green.task.blog.service;
 
 import com.green.task.blog.client.KakaoBlogSearchClient;
 import com.green.task.blog.dto.BlogSearchDto;
+import com.green.task.blog.dto.BlogSearchPageResponse;
 import com.green.task.blog.dto.PageResponse;
 import com.green.task.search.dto.SearchEventMessage;
 import com.green.task.search.listner.BlogSearchEventListener;
@@ -43,7 +44,7 @@ public class BlogSearchServiceTest {
                 "accuracy"
         );
         //when
-        PageResponse result = blogSearchService.search(dto);
+        BlogSearchPageResponse result = blogSearchService.search(dto);
 
         //then
         long count = events.stream(SearchEventMessage.class).count();

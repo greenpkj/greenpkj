@@ -1,7 +1,7 @@
 package com.green.task.blog;
 
 import com.green.task.blog.dto.BlogSearchDto;
-import com.green.task.blog.dto.PageResponse;
+import com.green.task.blog.dto.BlogSearchPageResponse;
 import com.green.task.blog.service.BlogSearchService;
 import com.green.task.config.error.AppErrorCode;
 import com.green.task.config.exception.BadRequestException;
@@ -32,7 +32,7 @@ public class BlogSearchController {
     private final BlogSearchService blogSearchService;
 
     @GetMapping
-    public PageResponse search(
+    public BlogSearchPageResponse search(
             @NotBlank(message = QUERY_VALID_MESSAGE) @RequestParam String query,
             @Min(value = 1, message = PAGE_MIN_VALID_MESSAGE) @RequestParam(defaultValue = "1", required = false) int page,
             @Max(value = 50, message = SIZE_MAX_VALID_MESSAGE) @RequestParam(defaultValue = "10", required = false) int size,

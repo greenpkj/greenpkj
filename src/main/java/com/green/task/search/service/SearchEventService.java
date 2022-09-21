@@ -1,7 +1,7 @@
 package com.green.task.search.service;
 
-import com.green.task.search.dto.SearchEventMessage;
 import com.green.task.search.dto.KeywordDto;
+import com.green.task.search.dto.SearchEventMessage;
 import com.green.task.search.entity.SearchEvent;
 import com.green.task.search.repository.SearchEventRepository;
 import lombok.RequiredArgsConstructor;

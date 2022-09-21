@@ -1,7 +1,7 @@
 package com.green.task.search.service;
 
-import com.green.task.search.dto.SearchEventMessage;
 import com.green.task.search.dto.KeywordDto;
+import com.green.task.search.dto.SearchEventMessage;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RedissonClient;
 import org.redisson.client.protocol.ScoredEntry;
